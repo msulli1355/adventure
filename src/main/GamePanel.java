@@ -19,13 +19,15 @@ public class GamePanel<Graphicw2D, Graphics2D> extends JPanel implements Runnabl
 	final int maxScreenRow = 12;
 	final int screenWidth = tileSize * maxScreenCol;//768px
 	final int screenHeight = tileSize * maxScreenRow;//576px
-	
+	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
+		this.addKeyListener(keyH);
+		this.setFocusable(true);
 	}
 
 	public void startGameThread() {
