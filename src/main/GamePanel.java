@@ -22,6 +22,16 @@ public class GamePanel<Graphicw2D, Graphics2D> extends JPanel implements Runnabl
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 
+
+	//Set player's default position
+	int playerX = 100;
+	int playerY = 100;
+	int playerSpeed = 4;
+	//FPS
+	int FPS = 60;
+	
+	
+	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -36,26 +46,44 @@ public class GamePanel<Graphicw2D, Graphics2D> extends JPanel implements Runnabl
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+
+		double drawInterval = 1000000000/FPS;//0.01666667 seconds
+		double nextDrawTime = System.nanoTime() + drawInterval;
+		
+		
 		while (gameThread != null)
 		{
-	//		System.out.println("The game loop is running.");
-			//UPDATE:  update information such as player's positino
 			update();
-			//DRAW draw the screen
-			
 			repaint();
+			try {
+				double remainingTime = nextDrawTime - System.nanoTime();
+				remainingTime /= 1000000;
+				if (remainingTime < 0) remainingTime = 0;
+				Thread.sleep((long)remainingTime);
+				
+				nextDrawTime += drawInterval;
+			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			} 
 		}
 	}
 	public void update() {
+		if (keyH.upPressed == true) playerY -= playerSpeed;
+		else if (keyH.downPressed == true) playerY += playerSpeed;
+		else if (keyH.leftPressed == true) 	playerX -= playerSpeed;
+		else if (keyH.rightPressed == true)	playerX += playerSpeed;
+	}
 	
 		
-	}
+	
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		Graphicw2D g2 = (Graphicw2D)g;
 		 ((Graphics) g2).setColor(Color.white);
-		 ((Graphics) g2).fillRect(100, 100, tileSize, tileSize);
+		 ((Graphics) g2).fillRect(playerX, playerY, tileSize, tileSize);
+		 
+		 
 		 ((Graphics) g2).dispose();
 	}
 }
