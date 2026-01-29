@@ -1,11 +1,14 @@
 package main;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable 
+public class GamePanel<Graphicw2D, Graphics2D> extends JPanel implements Runnable 
 {
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; //16x16 tile
@@ -23,8 +26,6 @@ public class GamePanel extends JPanel implements Runnable
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
-		
-		
 	}
 
 	public void startGameThread() {
@@ -34,6 +35,47 @@ public class GamePanel extends JPanel implements Runnable
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		while (gameThread != null)
+		{
+	//		System.out.println("The game loop is running.");
+			//UPDATE:  update information such as player's positino
+			update();
+			//DRAW draw the screen
+			
+			repaint();
+		}
+	}
+	public void update() {
+	
 		
 	}
+	public void paintComponent (Graphics g) {
+		super.paintComponent(g);
+		Graphicw2D g2 = (Graphicw2D)g;
+		 ((Graphics) g2).setColor(Color.white);
+		 ((Graphics) g2).fillRect(100, 100, tileSize, tileSize);
+		 ((Graphics) g2).dispose();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
