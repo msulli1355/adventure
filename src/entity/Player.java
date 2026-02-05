@@ -15,16 +15,21 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	public final int screenX;
+	public final int screenY;
+	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		setDefaultValues();
 		getPlayerImage();
 	}
 	
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		worldX = gp.tileSize * 23;
+		worldY = gp.tileSize * 21; 
 		speed = 4;
 		direction = "down";
 	}
@@ -53,27 +58,27 @@ public class Player extends Entity{
 		{
 			if (keyH.upPressed == true) 
 			{
-			this.y -= this.speed;
+			this.worldY -= this.speed;
 			direction = "up";
 			}
 		else if (keyH.downPressed == true) { 
-			this.y += this.speed;
+			this.worldY += this.speed;
 			direction = "down";
 		}
 		else if (keyH.leftPressed == true) {
-			this.x -= this.speed;
+			this.worldX -= this.speed;
 			direction  = "left";
 		}
 		else if (keyH.rightPressed == true)	{
-			this.x += this.speed;
+			this.worldX += this.speed;
 			direction = "right";
 		}
 
 		spriteCounter++;
-		if (spriteCounter > 12) {
-		if (spriteNum == 1) spriteNum = 2;
-		else if (spriteNum == 2) spriteNum = 1;
-		}
+		if (spriteCounter > 12) { 
+			if (spriteNum == 1) spriteNum = 2;
+			else if (spriteNum == 2) spriteNum = 1;
+			}
 		spriteCounter = 0;
 		}
 	}
@@ -105,7 +110,7 @@ public class Player extends Entity{
 		}
 		 
 		 if (spriteNum == 2) spriteNum = 1;
-    	 g2.drawImage(image, this.x, this.y, gp.tileSize, gp.tileSize, null);
+    	 g2.drawImage(image, this.screenX, this.screenY, gp.tileSize, gp.tileSize, null);
 
 	}
 }
