@@ -90,7 +90,7 @@ public class TileManager<Graphica2D>  {
 			worldCol++;
 
 			
-			if(worldCol == gp.maxScreenCol) {
+			if(worldCol == gp.maxWorldCol) {
 				worldCol = 0;
 
 				worldRow++;
